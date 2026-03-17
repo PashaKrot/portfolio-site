@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Брюс Уэйн / Бэтмен</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Личная визитка Брюса Вейна (Бэтмена): герой Готэма, миллиардер и ночной страж города." />
+  <style>
+    :root {
+      --bg-gradient: radial-gradient(circle at top left, #0f172a 0%, #020617 45%, #020617 100%);
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.16);
+      --accent-strong: #bbf7d0;
+      --accent-alt: #38bdf8;
+      --text-primary: #f9fafb;
+      --text-muted: #94a3b8;
+      --surface: rgba(15, 23, 42, 0.96);
+      --border-subtle: rgba(148, 163, 184, 0.45);
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.95);
+      --radius-lg: 18px;
+      --radius-full: 999px;
+      --container-width: 980px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: #050308;
+      color: var(--text-primary);
+    }
+
+    body {
+      background: var(--bg-gradient);
+      display: flex;
+      justify-content: center;
+      padding: 32px 16px 40px;
+    }
+
+    .page {
+      width: 100%;
+      max-width: var(--container-width);
+      background: linear-gradient(
+          to bottom right,
+          rgba(56, 189, 248, 0.09),
+          rgba(15, 23, 42, 0.9)
+        ),
+        var(--surface);
+      border-radius: 28px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      box-shadow: var(--shadow-soft);
+      padding: 28px 32px 32px;
+      backdrop-filter: blur(24px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* декоративные элементы */
+
+    .glow-circle {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(42px);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .glow-circle--violet {
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(34, 197, 94, 0.9), transparent 65%);
+      top: -80px;
+      right: -60px;
+    }
+
+    .glow-circle--blue {
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.7), transparent 70%);
+      bottom: -100px;
+      left: -40px;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(
+          rgba(51, 65, 85, 0.6) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(51, 65, 85, 0.6) 1px,
+          transparent 1px
+        );
+      background-size: 32px 32px;
+      mix-blend-mode: soft-light;
+      opacity: 0.28;
+      pointer-events: none;
+      mask-image: radial-gradient(circle at center, black 0%, transparent 70%);
+    }
+
+    .page-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* глобальные элементы */
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 4px;
+      border-radius: var(--radius-full);
+      background: radial-gradient(circle at 0 0, rgba(34, 197, 94, 0.7), transparent 60%),
+        rgba(6, 78, 59, 0.9);
+      border: 1px solid rgba(34, 197, 94, 0.7);
+      color: var(--accent-strong);
+      font-size: 11px;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .badge-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #22c55e, #15803d);
+      box-shadow: 0 0 10px rgba(34, 197, 94, 0.8);
+    }
+
+    .badge-label {
+      opacity: 0.9;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(260px, 1fr);
+      gap: 36px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 14px;
+    }
+
+    .hero-name {
+      font-size: clamp(32px, 4vw, 40px);
+      font-weight: 650;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .hero-alias {
+      font-size: 15px;
+      color: var(--accent-strong);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(168, 85, 255, 0.5);
+    }
+
+    .hero-role {
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .hero-highlight {
+      margin-top: 4px;
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(199, 210, 254, 0.9);
+    }
+
+    .hero-highlight span {
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(129, 140, 248, 0.35);
+    }
+
+    .hero-description {
+      margin-top: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 520px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 20px;
+      margin-top: 12px;
+      font-size: 12px;
+      color: #e5e7eb;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-size: 10px;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .hero-meta-value {
+      opacity: 0.95;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      border-radius: var(--radius-full);
+      padding: 9px 16px;
+      font-size: 13px;
+      border: 1px solid transparent;
+      cursor: default;
+      user-select: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #8b5cf6, #ec4899);
+      color: #f9fafb;
+      box-shadow: 0 12px 25px rgba(129, 140, 248, 0.5);
+    }
+
+    .btn-ghost {
+      background: rgba(15, 23, 42, 0.8);
+      border-color: rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+    }
+
+    .btn-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22d3ee;
+      box-shadow: 0 0 8px rgba(34, 211, 238, 0.8);
+    }
+
+    /* карточка с аватаром */
+
+    .profile-card {
+      position: relative;
+      padding: 18px 18px 16px;
+      border-radius: 24px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.96), #020617);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      overflow: hidden;
+    }
+
+    .profile-orbit-ring {
+      position: absolute;
+      inset: -40%;
+      border-radius: 50%;
+      border: 1px dashed rgba(148, 163, 184, 0.3);
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    .profile-avatar-wrapper {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      padding: 4px;
+      background: conic-gradient(
+        from 220deg,
+        #22c55e,
+        #38bdf8,
+        #22c55e,
+        #0ea5e9
+      );
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4),
+        0 18px 30px rgba(15, 23, 42, 1);
+    }
+
+    .profile-avatar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(15, 23, 42, 0.95);
+      background: #020617 center/cover no-repeat;
+    }
+
+    .profile-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
+      display: block;
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .profile-shadow {
+      position: absolute;
+      inset: auto 14px -12px 14px;
+      height: 16px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 50% 0, rgba(15, 23, 42, 0.9), transparent 70%);
+      opacity: 0.9;
+    }
+
+    .profile-name {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .profile-caption {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .profile-separator {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(148, 163, 184, 0.7),
+        transparent
+      );
+      margin: 6px 0;
+    }
+
+    .profile-meta {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .profile-meta span {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .profile-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #facc15;
+      box-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+    }
+
+    /* основной контент */
+
+    .content {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
+      gap: 20px 28px;
+    }
+
+    .section {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, var(--accent-soft), transparent 70%),
+        rgba(15, 23, 42, 0.98);
+      padding: 18px 18px 16px;
+    }
+
+    .section--muted {
+      background: radial-gradient(circle at bottom right, rgba(56, 189, 248, 0.2), transparent 65%),
+        rgba(15, 23, 42, 0.98);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .section-title {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: rgba(191, 219, 254, 0.95);
+    }
+
+    .section-tag {
+      font-size: 10px;
+      color: rgba(148, 163, 184, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .section p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* навыки */
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .skill-card {
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.18), transparent 70%),
+        rgba(15, 23, 42, 0.98);
+      padding: 10px 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease,
+        background 0.18s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 22px rgba(15, 23, 42, 0.95);
+      border-color: rgba(56, 189, 248, 0.85);
+      background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 70%),
+        rgba(15, 23, 42, 1);
+    }
+
+    .skill-icon {
+      font-size: 20px;
+    }
+
+    .skill-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(226, 232, 240, 0.95);
+    }
+
+    .skill-text {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* контакты */
+
+    .contacts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-size: 13px;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .contact-label {
+      min-width: 70px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(148, 163, 184, 0.95);
+    }
+
+    .contact-value a {
+      color: var(--accent-strong);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .contact-value a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      opacity: 0.7;
+      transform-origin: left;
+      transform: scaleX(1);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .contact-value a:hover {
+      color: #e0f2fe;
+      transform: translateY(-1px);
+    }
+
+    .contact-value a:hover::after {
+      opacity: 1;
+      transform: scaleX(1.05);
+    }
+
+    .contact-note {
+      font-size: 11px;
+      color: rgba(148, 163, 184, 0.8);
+      margin-top: 8px;
+    }
+
+    .social-chips {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      padding: 4px 9px;
+      font-size: 11px;
+      color: #e5e7eb;
+      background: rgba(15, 23, 42, 0.95);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .chip-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+    }
+
+    .chip:hover {
+      border-color: rgba(34, 197, 94, 0.9);
+      background: radial-gradient(circle at top left, rgba(34, 197, 94, 0.15), rgba(15, 23, 42, 0.98));
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(15, 23, 42, 0.9);
+    }
+
+    .chip {
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    /* футер */
+
+    .footer {
+      margin-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      color: rgba(148, 163, 184, 0.8);
+    }
+
+    .footer span {
+      white-space: nowrap;
+    }
+
+    .footer-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(56, 189, 248, 0.8),
+        transparent
+      );
+    }
+
+    /* анимации появления */
+
+    @keyframes fade-up {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fade-in-soft {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fade-up 0.7s ease-out forwards;
+    }
+
+    .reveal--slow {
+      animation-duration: 0.9s;
+    }
+
+    .reveal-delay-1 {
+      animation-delay: 0.1s;
+    }
+
+    .reveal-delay-2 {
+      animation-delay: 0.2s;
+    }
+
+    .reveal-delay-3 {
+      animation-delay: 0.3s;
+    }
+
+    .reveal-delay-4 {
+      animation-delay: 0.4s;
+    }
+
+    .reveal-delay-5 {
+      animation-delay: 0.5s;
+    }
+
+    .page-inner {
+      animation: fade-in-soft 0.5s ease-out;
+    }
+
+    /* адаптив */
+
+    @media (max-width: 900px) {
+      body {
+        padding: 16px 10px 22px;
+      }
+
+      .page {
+        padding: 20px 16px 20px;
+        border-radius: 22px;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        margin-top: 16px;
+      }
+
+      .profile-card {
+        order: -1;
+        margin-bottom: 2px;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-top: 26px;
+      }
+
+      .section {
+        padding: 14px 14px 13px;
+      }
+
+      .hero-description {
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-name {
+        font-size: 26px;
+      }
+
+      .hero-cta-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        justify-content: center;
+        width: 100%;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .footer span {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page" aria-label="Портфолио Брюса Вейна">
+    <div class="glow-circle glow-circle--violet"></div>
+    <div class="glow-circle glow-circle--blue"></div>
+    <div class="grid-overlay"></div>
+
+    <div class="page-inner">
+      <div class="badge reveal reveal-delay-1" aria-label="Страж Готэма">
+        <div class="badge-dot"></div>
+        <span class="badge-label">Ночной страж Готэма</span>
+      </div>
+
+      <section class="layout" aria-label="Герой">
+        <div class="hero reveal reveal-delay-2">
+          <div>
+            <div class="hero-title-row">
+              <h1 class="hero-name">Брюс Уэйн</h1>
+              <span class="hero-alias">также известен как Бэтмен</span>
+            </div>
+            <p class="hero-role">Миллиардер, филантроп и ночной страж Готэма</p>
+
+            <div class="hero-highlight" aria-label="Роли Бэтмена">
+              <span>Детектив</span>
+              <span>Мститель</span>
+              <span>Член Лиги справедливости</span>
+            </div>
+          </div>
+
+          <p class="hero-description">
+            Днём Брюс Уэйн — наследник семейного состояния и владелец Wayne Enterprises,
+            а ночью — Бэтмен, легенда Готэма. Лишённый сверхспособностей, он полагается
+            на интеллект, дисциплину и технологии, чтобы нарушить привычные правила игры
+            преступного мира.
+          </p>
+
+          <div class="hero-meta" aria-label="Краткая информация">
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Город</span>
+              <span class="hero-meta-value">Готэм-сити</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Род занятий</span>
+              <span class="hero-meta-value">Глава Wayne Enterprises / ночной мститель</span>
+            </div>
+            <div class="hero-meta-item">
+              <span class="hero-meta-label">Состояние</span>
+              <span class="hero-meta-value">Миллиардер | Высокотехнологичный арсенал</span>
+            </div>
+          </div>
+
+          <div class="hero-cta-row" aria-label="Ключевые акценты">
+            <div class="btn-primary">
+              <span class="btn-dot"></span>
+              Безмолвный хранитель Готэма
+            </div>
+            <div class="btn-ghost">
+              «Важно не то, кто ты внутри, а то, что ты делаешь».
+            </div>
+          </div>
+        </div>
+
+        <aside class="profile-card reveal reveal-delay-3" aria-label="Аватар и статус">
+          <div class="profile-orbit-ring"></div>
+          <div class="profile-avatar-wrapper">
+            <div class="profile-avatar">
+              <!-- Портрет Бэтмена (Wikimedia Commons, чёрный фон) -->
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Batman_%28black_background%29.jpg"
+                alt="Портрет Бэтмена в маске на тёмном фоне"
+              />
+            </div>
+          </div>
+          <div class="profile-shadow"></div>
+
+          <div class="profile-name">БЭТМЕН</div>
+          <div class="profile-caption">Тёмный рыцарь и величайший детектив</div>
+
+          <div class="profile-separator"></div>
+
+          <div class="profile-meta">
+            <span><span class="profile-dot"></span> Active in Gotham</span>
+            <span>Justice League Operative</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="content" aria-label="О себе и контакты">
+        <section class="section section--muted reveal reveal-delay-2" aria-labelledby="about-heading">
+            <div class="section-header">
+              <h2 id="about-heading" class="section-title">О себе</h2>
+              <span class="section-tag">Происхождение и миссия</span>
+            </div>
+            <p>
+              В детстве Брюс Уэйн стал свидетелем убийства своих родителей, Томаса и Марты,
+              в переулке Готэма. Эта ночь навсегда изменила его жизнь и превратила личную
+              трагедию в клятву: сделать всё возможное, чтобы ни один ребёнок больше не
+              пережил подобного ужаса.
+            </p>
+            <p>
+              Вместо того чтобы смириться, Брюс посвятил годы тренировкам и обучению:
+              боевые искусства, стратегия, криминалистика, психология и наука. Не обладая
+              сверхспособностями, он сделал своим оружием интеллект, дисциплину и
+              безупречную подготовку, а состояние семьи Вейнов превратил в источник
+              технологий и инфраструктуры Бэт-пещеры, Бэтмобиля и других средств борьбы
+              с преступностью.
+            </p>
+            <p>
+              Как Бэтмен он действует из тени, сея страх в сердцах преступников и
+              выстраивая хрупкий баланс между порядком и хаосом. Работая с комиссаром
+              Гордоном, Альфредом и другими союзниками, он остаётся тем, кем Готэм
+              нуждается быть защищён: молчаливым стражем, бдительным защитником и Тёмным
+              Рыцарем.
+            </p>
+        </section>
+
+        <section class="section reveal reveal-delay-2" aria-labelledby="contacts-heading">
+          <div class="section-header">
+            <h2 id="contacts-heading" class="section-title">Контакты</h2>
+            <span class="section-tag">Сигналы и каналы связи</span>
+          </div>
+
+          <div class="contacts-list">
+            <div class="contact-item">
+              <div class="contact-label">Сигнал Бэтмена</div>
+              <div class="contact-value">
+                Крыша департамента полиции Готэма, отдел по борьбе с тяжкими преступлениями
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-label">Особняк Вейнов</div>
+              <div class="contact-value">
+                <span>Усадьба семьи Вейнов за пределами Готэма</span>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-label">Башня Вейнов</div>
+              <div class="contact-value">
+                <span>Штаб-квартира Wayne Enterprises в центре Готэма</span>
+              </div>
+            </div>
+
+            <div class="contact-item">
+              <div class="contact-label">Защищённая линия</div>
+              <div class="contact-value">
+                <span>Зашифрованные каналы Лиги справедливости</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="contact-note">
+            Для неотложных угроз городского масштаба используйте прожектор с
+            символом летучей мыши над зданием полиции Готэма. Остальные запросы
+            обрабатываются по усмотрению Тёмного Рыцаря.
+          </p>
+
+          <div class="social-chips" aria-label="Социальные связи">
+            <a
+              class="chip"
+              href="https://www.dc.com/characters/batman"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="chip-bullet"></span>
+              Официальный профиль DC
+            </a>
+            <a
+              class="chip"
+              href="https://en.wikipedia.org/wiki/Batman"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="chip-bullet"></span>
+              Бэтмен в Википедии
+            </a>
+            <a
+              class="chip"
+              href="https://dc.fandom.com/wiki/Batman_(Bruce_Wayne)"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="chip-bullet"></span>
+              Досье Готэма
+            </a>
+          </div>
+        </section>
+
+        <section class="section reveal reveal-delay-3" aria-labelledby="skills-heading">
+            <div class="section-header">
+              <h2 id="skills-heading" class="section-title">Сильные стороны</h2>
+              <span class="section-tag">Способности</span>
+            </div>
+            <p>
+              <strong>Интеллект и детективное мышление.</strong>
+              Бэтмен известен как один из величайших детективов мира, способный
+              распутывать сложнейшие заговоры и оперировать несколькими сценариями
+              наперёд.
+            </p>
+            <p>
+              <strong>Боевые навыки и тактика.</strong>
+              Мастер множества боевых искусств, владеет тактикой городского боя,
+              скрытностью и психологическим воздействием на противника.
+            </p>
+            <p>
+              <strong>Технологии и ресурсы Wayne Enterprises.</strong>
+              Доступ к передовым разработкам, высокотехнологичному снаряжению и
+              транспортным средствам, включая Бэтмобиль, Бэтплэн и сеть датчиков по
+              всему Готэму.
+            </p>
+        </section>
+
+        <section class="section section--muted reveal reveal-delay-3" aria-labelledby="allies-heading">
+          <div class="section-header">
+            <h2 id="allies-heading" class="section-title">Союзники &amp; Оппоненты</h2>
+            <span class="section-tag">Сеть связей</span>
+          </div>
+          <p>
+            <strong>Союзники:</strong> Альфред Пенниуорт, комиссар Джим Гордон, Робин,
+            Бэтгёрл, члены Лиги Справедливости.
+          </p>
+          <p>
+            <strong>Противники:</strong> Джокер, Пингвин, Загадочник, Двуликий, Бэйн и
+            другие фигуры преступного мира Готэма.
+          </p>
+        </section>
+
+        <section class="section reveal reveal-delay-4" aria-labelledby="skills-grid-heading">
+            <div class="section-header">
+              <h2 id="skills-grid-heading" class="section-title">Мои навыки</h2>
+              <span class="section-tag">Ключевые компетенции</span>
+            </div>
+            <div class="skills-grid" aria-label="Список навыков">
+              <article class="skill-card">
+                <div class="skill-icon">🕵️‍♂️</div>
+                <div class="skill-title">Детективный анализ</div>
+                <p class="skill-text">
+                  Замечаю детали, которые другие пропускают, и выстраиваю целостную картину из разрозненных улик.
+                </p>
+              </article>
+              <article class="skill-card">
+                <div class="skill-icon">🧠</div>
+                <div class="skill-title">Стратегическое мышление</div>
+                <p class="skill-text">
+                  Планирую несколько сценариев наперёд и готовлю резервные ходы на случай непредвиденных ситуаций.
+                </p>
+              </article>
+              <article class="skill-card">
+                <div class="skill-icon">🥷</div>
+                <div class="skill-title">Работа из тени</div>
+                <p class="skill-text">
+                  Эффективно действую в условиях неопределённости, минимизируя шум и риски для команды.
+                </p>
+              </article>
+              <article class="skill-card">
+                <div class="skill-icon">🛰️</div>
+                <div class="skill-title">Технологии и гаджеты</div>
+                <p class="skill-text">
+                  Умею подбирать и внедрять инструменты, которые усиливают стратегии и дают тактическое преимущество.
+                </p>
+              </article>
+              <article class="skill-card">
+                <div class="skill-icon">🛡️</div>
+                <div class="skill-title">Защита и безопасность</div>
+                <p class="skill-text">
+                  Ставлю безопасность людей и города в приоритет, выстраивая надёжные защитные контуры.
+                </p>
+              </article>
+              <article class="skill-card">
+                <div class="skill-icon">🚗</div>
+                <div class="skill-title">Быстрая реакция</div>
+                <p class="skill-text">
+                  Принимаю решения под давлением и моментально перехожу от плана к действиям.
+                </p>
+              </article>
+            </div>
+        </section>
+      </section>
+
+      <footer class="footer reveal reveal--slow reveal-delay-4" aria-label="Футер">
+        <span>Готэм-сити • Wayne Enterprises / операции Бэтмена</span>
+        <div class="footer-line"></div>
+        <span>«Я — тьма. Я — Бэтмен».</span>
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
