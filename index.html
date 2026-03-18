@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Брюс Уэйн / Бэтмен</title>
+  <title>Кротов Павел — Vibe‑Coding разработчик</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Личная визитка Брюса Вейна (Бэтмена): герой Готэма, миллиардер и ночной страж города." />
+  <meta name="description" content="Сайт‑визитка: Кротов Павел, junior vibe‑coding разработчик из Архангельска. Быстрые MVP, аккуратная вёрстка и деплой на GitHub/Vercel с помощью AI‑инструментов." />
   <style>
     :root {
       --bg-gradient: radial-gradient(circle at top left, #0f172a 0%, #020617 45%, #020617 100%);
@@ -235,47 +235,6 @@
       opacity: 0.95;
     }
 
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .btn-primary,
-    .btn-ghost {
-      border-radius: var(--radius-full);
-      padding: 9px 16px;
-      font-size: 13px;
-      border: 1px solid transparent;
-      cursor: default;
-      user-select: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      color: #f9fafb;
-      box-shadow: 0 12px 25px rgba(129, 140, 248, 0.5);
-    }
-
-    .btn-ghost {
-      background: rgba(15, 23, 42, 0.8);
-      border-color: rgba(148, 163, 184, 0.6);
-      color: #e5e7eb;
-    }
-
-    .btn-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: #22d3ee;
-      box-shadow: 0 0 8px rgba(34, 211, 238, 0.8);
-    }
-
     /* карточка с аватаром */
 
     .profile-card {
@@ -299,6 +258,8 @@
       border: 1px dashed rgba(148, 163, 184, 0.3);
       opacity: 0.6;
       pointer-events: none;
+      transform: rotate(0deg);
+      transition: opacity 0.25s ease;
     }
 
     .profile-avatar-wrapper {
@@ -316,6 +277,8 @@
       );
       box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4),
         0 18px 30px rgba(15, 23, 42, 1);
+      transform: translateY(0);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
     }
 
     .profile-avatar {
@@ -331,9 +294,38 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: 50% 18%;
+      /* Кадрируем так, чтобы было видно голову и часть торса */
+      object-position: 50% 40%;
       display: block;
       filter: saturate(1.1) contrast(1.05);
+      transform: scale(1.08);
+      transition: filter 0.25s ease, transform 0.25s ease;
+    }
+
+    @keyframes orbit-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .profile-card:hover .profile-avatar-wrapper {
+      transform: translateY(-3px);
+      box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.55),
+        0 22px 40px rgba(15, 23, 42, 0.95);
+      filter: brightness(1.03);
+    }
+
+    .profile-card:hover .profile-avatar img {
+      transform: scale(1.1);
+      filter: saturate(1.18) contrast(1.08);
+    }
+
+    .profile-card:hover .profile-orbit-ring {
+      opacity: 0.75;
+      animation: orbit-spin 14s linear infinite;
     }
 
     .profile-shadow {
@@ -402,7 +394,19 @@
       margin-top: 32px;
       display: grid;
       grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.4fr);
-      gap: 20px 28px;
+      gap: 24px;
+    }
+
+    .section--span {
+      grid-column: 1 / -1;
+    }
+
+    .content + .section {
+      margin-top: 24px;
+    }
+
+    .section + .footer {
+      margin-top: 24px;
     }
 
     .section {
@@ -729,17 +733,6 @@
         font-size: 26px;
       }
 
-      .hero-cta-row {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .btn-primary,
-      .btn-ghost {
-        justify-content: center;
-        width: 100%;
-      }
-
       .footer {
         flex-direction: column;
         align-items: stretch;
@@ -752,87 +745,77 @@
   </style>
 </head>
 <body>
-  <main class="page" aria-label="Портфолио Брюса Вейна">
+  <main class="page" aria-label="Сайт-визитка Павла Кротова">
     <div class="glow-circle glow-circle--violet"></div>
     <div class="glow-circle glow-circle--blue"></div>
     <div class="grid-overlay"></div>
 
     <div class="page-inner">
-      <div class="badge reveal reveal-delay-1" aria-label="Страж Готэма">
+      <div class="badge reveal reveal-delay-1" aria-label="Статус">
         <div class="badge-dot"></div>
-        <span class="badge-label">Ночной страж Готэма</span>
+        <span class="badge-label">Open to work • Junior developer</span>
       </div>
 
       <section class="layout" aria-label="Герой">
         <div class="hero reveal reveal-delay-2">
           <div>
             <div class="hero-title-row">
-              <h1 class="hero-name">Брюс Уэйн</h1>
-              <span class="hero-alias">также известен как Бэтмен</span>
+              <h1 class="hero-name">Кротов Павел</h1>
+              <span class="hero-alias">vibe‑coding разработчик</span>
             </div>
-            <p class="hero-role">Миллиардер, филантроп и ночной страж Готэма</p>
+            <p class="hero-role">Junior • Архангельск • опыт до 1 года</p>
 
-            <div class="hero-highlight" aria-label="Роли Бэтмена">
-              <span>Детектив</span>
-              <span>Мститель</span>
-              <span>Член Лиги справедливости</span>
+            <div class="hero-highlight" aria-label="Ключевые акценты">
+              <span>Быстрые MVP</span>
+              <span>Аккуратная вёрстка</span>
+              <span>AI‑assisted dev</span>
             </div>
           </div>
 
           <p class="hero-description">
-            Днём Брюс Уэйн — наследник семейного состояния и владелец Wayne Enterprises,
-            а ночью — Бэтмен, легенда Готэма. Лишённый сверхспособностей, он полагается
-            на интеллект, дисциплину и технологии, чтобы нарушить привычные правила игры
-            преступного мира.
+            Делаю сайты‑визитки и небольшие веб‑проекты с современным дизайном и быстрым
+            циклом разработки. Работаю в стиле vibe‑coding: быстро собираю MVP, уточняю
+            требования итерациями и довожу результат до публикации через GitHub и деплой.
           </p>
 
           <div class="hero-meta" aria-label="Краткая информация">
             <div class="hero-meta-item">
               <span class="hero-meta-label">Город</span>
-              <span class="hero-meta-value">Готэм-сити</span>
+              <span class="hero-meta-value">Архангельск</span>
             </div>
             <div class="hero-meta-item">
-              <span class="hero-meta-label">Род занятий</span>
-              <span class="hero-meta-value">Глава Wayne Enterprises / ночной мститель</span>
+              <span class="hero-meta-label">Роль</span>
+              <span class="hero-meta-value">Junior vibe‑coding разработчик</span>
             </div>
             <div class="hero-meta-item">
-              <span class="hero-meta-label">Состояние</span>
-              <span class="hero-meta-value">Миллиардер | Высокотехнологичный арсенал</span>
+              <span class="hero-meta-label">Инструменты</span>
+              <span class="hero-meta-value">Cursor • ChatGPT • Perplexity</span>
             </div>
           </div>
 
-          <div class="hero-cta-row" aria-label="Ключевые акценты">
-            <div class="btn-primary">
-              <span class="btn-dot"></span>
-              Безмолвный хранитель Готэма
-            </div>
-            <div class="btn-ghost">
-              «Важно не то, кто ты внутри, а то, что ты делаешь».
-            </div>
-          </div>
         </div>
 
         <aside class="profile-card reveal reveal-delay-3" aria-label="Аватар и статус">
           <div class="profile-orbit-ring"></div>
           <div class="profile-avatar-wrapper">
             <div class="profile-avatar">
-              <!-- Портрет Бэтмена (Wikimedia Commons, чёрный фон) -->
+              <!-- avatar.png положи рядом с index.html -->
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Batman_%28black_background%29.jpg"
-                alt="Портрет Бэтмена в маске на тёмном фоне"
+                src="./avatar.jpg"
+                alt="Аватар Павла Кротова"
               />
             </div>
           </div>
           <div class="profile-shadow"></div>
 
-          <div class="profile-name">БЭТМЕН</div>
-          <div class="profile-caption">Тёмный рыцарь и величайший детектив</div>
+          <div class="profile-name">ПАВЕЛ КРОТОВ</div>
+          <div class="profile-caption">Junior vibe‑coding developer</div>
 
           <div class="profile-separator"></div>
 
           <div class="profile-meta">
-            <span><span class="profile-dot"></span> Active in Gotham</span>
-            <span>Justice League Operative</span>
+            <span><span class="profile-dot"></span> Open to work</span>
+            <span>Архангельск (UTC+3)</span>
           </div>
         </aside>
       </section>
@@ -841,199 +824,161 @@
         <section class="section section--muted reveal reveal-delay-2" aria-labelledby="about-heading">
             <div class="section-header">
               <h2 id="about-heading" class="section-title">О себе</h2>
-              <span class="section-tag">Происхождение и миссия</span>
+              <span class="section-tag">Коротко и по делу</span>
             </div>
             <p>
-              В детстве Брюс Уэйн стал свидетелем убийства своих родителей, Томаса и Марты,
-              в переулке Готэма. Эта ночь навсегда изменила его жизнь и превратила личную
-              трагедию в клятву: сделать всё возможное, чтобы ни один ребёнок больше не
-              пережил подобного ужаса.
+              Меня зовут Павел Кротов, я из Архангельска. Я начинающий разработчик и
+              люблю подход “vibe‑coding”: быстро собрать основу, получить обратную связь,
+              улучшить и довести до публикации.
             </p>
             <p>
-              Вместо того чтобы смириться, Брюс посвятил годы тренировкам и обучению:
-              боевые искусства, стратегия, криминалистика, психология и наука. Не обладая
-              сверхспособностями, он сделал своим оружием интеллект, дисциплину и
-              безупречную подготовку, а состояние семьи Вейнов превратил в источник
-              технологий и инфраструктуры Бэт-пещеры, Бэтмобиля и других средств борьбы
-              с преступностью.
+              В работе делаю упор на аккуратную вёрстку, понятный интерфейс и
+              предсказуемый результат. Использую AI‑инструменты (Cursor, ChatGPT,
+              Perplexity) как ускоритель, но решения всегда проверяю и довожу руками.
             </p>
             <p>
-              Как Бэтмен он действует из тени, сея страх в сердцах преступников и
-              выстраивая хрупкий баланс между порядком и хаосом. Работая с комиссаром
-              Гордоном, Альфредом и другими союзниками, он остаётся тем, кем Готэм
-              нуждается быть защищён: молчаливым стражем, бдительным защитником и Тёмным
-              Рыцарем.
+              До разработки работал с людьми и процессами: модерировал большое
+              крипто‑сообщество и занимался задачами в отделе инсталляции у крупного
+              провайдера цифровых и телеком‑услуг.
             </p>
         </section>
 
         <section class="section reveal reveal-delay-2" aria-labelledby="contacts-heading">
           <div class="section-header">
             <h2 id="contacts-heading" class="section-title">Контакты</h2>
-            <span class="section-tag">Сигналы и каналы связи</span>
+            <span class="section-tag">Связаться со мной</span>
           </div>
 
           <div class="contacts-list">
             <div class="contact-item">
-              <div class="contact-label">Сигнал Бэтмена</div>
-              <div class="contact-value">
-                Крыша департамента полиции Готэма, отдел по борьбе с тяжкими преступлениями
-              </div>
+              <div class="contact-label">Telegram</div>
+              <div class="contact-value"><a href="https://t.me/pavelWork0" target="_blank" rel="noreferrer">@pavelWork0</a></div>
             </div>
 
             <div class="contact-item">
-              <div class="contact-label">Особняк Вейнов</div>
-              <div class="contact-value">
-                <span>Усадьба семьи Вейнов за пределами Готэма</span>
-              </div>
+              <div class="contact-label">GitHub</div>
+              <div class="contact-value"><a href="https://github.com/PashaKrot" target="_blank" rel="noreferrer">github.com/PashaKrot</a></div>
             </div>
 
             <div class="contact-item">
-              <div class="contact-label">Башня Вейнов</div>
-              <div class="contact-value">
-                <span>Штаб-квартира Wayne Enterprises в центре Готэма</span>
-              </div>
+              <div class="contact-label">Проект</div>
+              <div class="contact-value"><a href="https://github.com/PashaKrot/portfolio-site" target="_blank" rel="noreferrer">portfolio-site</a></div>
             </div>
 
             <div class="contact-item">
-              <div class="contact-label">Защищённая линия</div>
-              <div class="contact-value">
-                <span>Зашифрованные каналы Лиги справедливости</span>
-              </div>
+              <div class="contact-label">Город</div>
+              <div class="contact-value"><span>Архангельск</span></div>
             </div>
           </div>
 
           <p class="contact-note">
-            Для неотложных угроз городского масштаба используйте прожектор с
-            символом летучей мыши над зданием полиции Готэма. Остальные запросы
-            обрабатываются по усмотрению Тёмного Рыцаря.
+            Быстрее всего отвечаю в Telegram. Если пишешь по проекту — коротко опиши задачу
+            и добавь ссылку/пример, чтобы я сразу понял контекст.
           </p>
 
           <div class="social-chips" aria-label="Социальные связи">
             <a
               class="chip"
-              href="https://www.dc.com/characters/batman"
+              href="https://t.me/pavelWork0"
               target="_blank"
               rel="noreferrer"
             >
               <span class="chip-bullet"></span>
-              Официальный профиль DC
+              Написать в Telegram
             </a>
             <a
               class="chip"
-              href="https://en.wikipedia.org/wiki/Batman"
+              href="https://github.com/PashaKrot"
               target="_blank"
               rel="noreferrer"
             >
               <span class="chip-bullet"></span>
-              Бэтмен в Википедии
+              GitHub профиль
             </a>
             <a
               class="chip"
-              href="https://dc.fandom.com/wiki/Batman_(Bruce_Wayne)"
+              href="https://github.com/PashaKrot/portfolio-site"
               target="_blank"
               rel="noreferrer"
             >
               <span class="chip-bullet"></span>
-              Досье Готэма
+              Репозиторий сайта
             </a>
           </div>
         </section>
 
-        <section class="section reveal reveal-delay-3" aria-labelledby="skills-heading">
-            <div class="section-header">
-              <h2 id="skills-heading" class="section-title">Сильные стороны</h2>
-              <span class="section-tag">Способности</span>
-            </div>
-            <p>
-              <strong>Интеллект и детективное мышление.</strong>
-              Бэтмен известен как один из величайших детективов мира, способный
-              распутывать сложнейшие заговоры и оперировать несколькими сценариями
-              наперёд.
-            </p>
-            <p>
-              <strong>Боевые навыки и тактика.</strong>
-              Мастер множества боевых искусств, владеет тактикой городского боя,
-              скрытностью и психологическим воздействием на противника.
-            </p>
-            <p>
-              <strong>Технологии и ресурсы Wayne Enterprises.</strong>
-              Доступ к передовым разработкам, высокотехнологичному снаряжению и
-              транспортным средствам, включая Бэтмобиль, Бэтплэн и сеть датчиков по
-              всему Готэму.
-            </p>
-        </section>
-
-        <section class="section section--muted reveal reveal-delay-3" aria-labelledby="allies-heading">
+        <section class="section section--muted section--span reveal reveal-delay-3" aria-labelledby="allies-heading">
           <div class="section-header">
-            <h2 id="allies-heading" class="section-title">Союзники &amp; Оппоненты</h2>
-            <span class="section-tag">Сеть связей</span>
+            <h2 id="allies-heading" class="section-title">Опыт</h2>
+            <span class="section-tag">Люди и процессы</span>
           </div>
           <p>
-            <strong>Союзники:</strong> Альфред Пенниуорт, комиссар Джим Гордон, Робин,
-            Бэтгёрл, члены Лиги Справедливости.
+            <strong>Крипто‑сообщество (1000+ участников):</strong> администратор / куратор /
+            модератор. Поддержка участников, правила, онбординг, порядок в чатах и
+            коммуникация в сложных ситуациях.
           </p>
           <p>
-            <strong>Противники:</strong> Джокер, Пингвин, Загадочник, Двуликий, Бэйн и
-            другие фигуры преступного мира Готэма.
+            <strong>Крупный провайдер цифровых и телеком‑услуг:</strong> отдел инсталляции.
+            Работа по регламентам, взаимодействие со смежными командами и задачами установки/подключения.
           </p>
-        </section>
-
-        <section class="section reveal reveal-delay-4" aria-labelledby="skills-grid-heading">
-            <div class="section-header">
-              <h2 id="skills-grid-heading" class="section-title">Мои навыки</h2>
-              <span class="section-tag">Ключевые компетенции</span>
-            </div>
-            <div class="skills-grid" aria-label="Список навыков">
-              <article class="skill-card">
-                <div class="skill-icon">🕵️‍♂️</div>
-                <div class="skill-title">Детективный анализ</div>
-                <p class="skill-text">
-                  Замечаю детали, которые другие пропускают, и выстраиваю целостную картину из разрозненных улик.
-                </p>
-              </article>
-              <article class="skill-card">
-                <div class="skill-icon">🧠</div>
-                <div class="skill-title">Стратегическое мышление</div>
-                <p class="skill-text">
-                  Планирую несколько сценариев наперёд и готовлю резервные ходы на случай непредвиденных ситуаций.
-                </p>
-              </article>
-              <article class="skill-card">
-                <div class="skill-icon">🥷</div>
-                <div class="skill-title">Работа из тени</div>
-                <p class="skill-text">
-                  Эффективно действую в условиях неопределённости, минимизируя шум и риски для команды.
-                </p>
-              </article>
-              <article class="skill-card">
-                <div class="skill-icon">🛰️</div>
-                <div class="skill-title">Технологии и гаджеты</div>
-                <p class="skill-text">
-                  Умею подбирать и внедрять инструменты, которые усиливают стратегии и дают тактическое преимущество.
-                </p>
-              </article>
-              <article class="skill-card">
-                <div class="skill-icon">🛡️</div>
-                <div class="skill-title">Защита и безопасность</div>
-                <p class="skill-text">
-                  Ставлю безопасность людей и города в приоритет, выстраивая надёжные защитные контуры.
-                </p>
-              </article>
-              <article class="skill-card">
-                <div class="skill-icon">🚗</div>
-                <div class="skill-title">Быстрая реакция</div>
-                <p class="skill-text">
-                  Принимаю решения под давлением и моментально перехожу от плана к действиям.
-                </p>
-              </article>
-            </div>
         </section>
       </section>
 
+      <section class="section reveal reveal-delay-4" aria-labelledby="skills-grid-heading">
+        <div class="section-header">
+          <h2 id="skills-grid-heading" class="section-title">Мои навыки</h2>
+          <span class="section-tag">6 карточек</span>
+        </div>
+        <div class="skills-grid" aria-label="Список навыков">
+          <article class="skill-card">
+            <div class="skill-icon">⚡</div>
+            <div class="skill-title">Быстрые MVP</div>
+            <p class="skill-text">
+              Собираю рабочий результат быстро и улучшаю его итерациями по фидбеку.
+            </p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">🧩</div>
+            <div class="skill-title">Вёрстка и UI</div>
+            <p class="skill-text">
+              CSS Grid/Flex, адаптив, аккуратные отступы и визуальная “чистота”.
+            </p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">🛠️</div>
+            <div class="skill-title">AI‑assisted dev</div>
+            <p class="skill-text">
+              Cursor, ChatGPT, Perplexity — ускоряю разработку и поиск решений.
+            </p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">🚀</div>
+            <div class="skill-title">Деплой</div>
+            <p class="skill-text">
+              GitHub + публикация проекта: держу историю изменений и быстро выкатываю обновления.
+            </p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">🧠</div>
+            <div class="skill-title">Самообучение</div>
+            <p class="skill-text">
+              Разбираюсь с задачами по документации и примерам, быстро закрываю пробелы.
+            </p>
+          </article>
+          <article class="skill-card">
+            <div class="skill-icon">🤝</div>
+            <div class="skill-title">Коммуникация</div>
+            <p class="skill-text">
+              Опыт модерации 1000+ участников: спокойно решаю конфликты и держу порядок.
+            </p>
+          </article>
+        </div>
+      </section>
+
       <footer class="footer reveal reveal--slow reveal-delay-4" aria-label="Футер">
-        <span>Готэм-сити • Wayne Enterprises / операции Бэтмена</span>
+        <span>Архангельск • Junior vibe‑coding разработчик</span>
         <div class="footer-line"></div>
-        <span>«Я — тьма. Я — Бэтмен».</span>
+        <span>Связь: <a href="https://t.me/pavelWork0" target="_blank" rel="noreferrer" style="color: inherit; text-decoration: none;">@pavelWork0</a></span>
       </footer>
     </div>
   </main>
