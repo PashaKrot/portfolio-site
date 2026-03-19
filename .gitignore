@@ -3,4 +3,7 @@
 !.gitignore
 !avatar.png
 !avatar.jpg
+!knowledge.json
+!api/
+!api/**
 .vercel
