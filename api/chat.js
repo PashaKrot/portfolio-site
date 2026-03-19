@@ -9,7 +9,8 @@
 
 const KNOWLEDGE = require("../knowledge.json");
 
-const API_URL = "https://api.minimax.io/anthropic/v1/messages";
+// Официальный Text API MiniMax (не Anthropic-совместимый путь)
+const API_URL = "https://api.minimax.io/v1/text/chatcompletion_v2";
 
 function buildSystemPrompt(knowledge) {
   const contact = knowledge?.contact;
@@ -43,16 +44,48 @@ async function callMiniMax(apiKey, userMessage, systemPrompt) {
     },
     body: JSON.stringify({
       model: "MiniMax-M2.5",
-      messages: [{ role: "user", content: userMessage }],
-      max_tokens: 900,
+      messages: [
+        { role: "system", name: "assistant", content: systemPrompt },
+        { role: "user", name: "user", content: userMessage }
+      ],
+      max_completion_tokens: 900,
       temperature: 0.4,
-      system: systemPrompt
+      stream: false
     })
   });
 
-  const data = await response.json();
-  const content = data?.content?.[0]?.text;
-  if (!content) throw new Error("MiniMax: пустой ответ");
+  const raw = await response.text();
+  let data;
+  try {
+    data = raw ? JSON.parse(raw) : {};
+  } catch (e) {
+    throw new Error(
+      `MiniMax: не JSON в ответе (${response.status}). ${raw.slice(0, 200)}`
+    );
+  }
+
+  if (!response.ok) {
+    const msg =
+      data?.base_resp?.status_msg ||
+      data?.error?.message ||
+      data?.message ||
+      JSON.stringify(data).slice(0, 300);
+    throw new Error(`MiniMax HTTP ${response.status}: ${msg}`);
+  }
+
+  const br = data?.base_resp;
+  if (br && br.status_code !== undefined && br.status_code !== 0) {
+    throw new Error(
+      `MiniMax: ${br.status_msg || "ошибка API"} (code ${br.status_code})`
+    );
+  }
+
+  const content = data?.choices?.[0]?.message?.content;
+  if (!content || typeof content !== "string") {
+    throw new Error(
+      "MiniMax: пустой ответ (нет choices[0].message.content). Проверьте модель и ключ."
+    );
+  }
   return content;
 }
 
