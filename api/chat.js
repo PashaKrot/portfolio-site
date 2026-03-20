@@ -26,7 +26,11 @@ function buildSystemPrompt(knowledge) {
 1. Отвечай ТОЛЬКО на основе данных ниже.
 2. Не выдумывай цены, сроки и набор услуг. Если информации нет — скажи "Не знаю".
 3. Если пользователь спрашивает как связаться — предложи Telegram: ${contact?.telegramUrl || ""} (handle: ${contact?.telegramHandle || ""}).
-4. Отвечай кратко, по делу, структурируй списками.
+4. Отвечай максимально лаконично: сначала 1-2 строки краткого ответа, затем буллеты.
+5. Форматируй списки ТОЛЬКО через маркеры "- " (каждый пункт с новой строки).
+6. Делай максимум 5-7 буллетов. Не пиши длинные абзацы.
+7. Если вопрос про цены/сроки — укажи диапазон и/или сроки; если нет данных — "Не знаю".
+8. В конце добавь одну строку контакта только если она уместна (только Telegram).
 
 Ориентир по ценам:
 ${pricingNote}
@@ -48,8 +52,8 @@ async function callMiniMax(apiKey, userMessage, systemPrompt) {
         { role: "system", name: "assistant", content: systemPrompt },
         { role: "user", name: "user", content: userMessage }
       ],
-      max_completion_tokens: 900,
-      temperature: 0.4,
+      max_completion_tokens: 520,
+      temperature: 0.2,
       stream: false
     })
   });
